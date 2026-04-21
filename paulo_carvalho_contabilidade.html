@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paulo Carvalho Contabilidade — Precisão que Transforma</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0a1628;
+      --navy-mid: #112240;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --light: #f9f7f4;
+      --border: rgba(201,168,76,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 6%;
+      background: rgba(10,22,40,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: rgba(255,255,255,0.75);
+      font-size: 0.875rem; font-weight: 500; letter-spacing: 0.3px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold); color: var(--navy);
+      border: none; padding: 0.65rem 1.5rem;
+      border-radius: 4px; font-weight: 600; font-size: 0.875rem;
+      cursor: pointer; transition: all 0.25s;
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none;
+    }
+    .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid; place-items: center;
+      padding: 8rem 6% 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(17,34,64,0.8) 0%, transparent 70%),
+        linear-gradient(160deg, #0a1628 0%, #112240 60%, #0d1e38 100%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 750px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      border: 1px solid var(--border);
+      padding: 0.4rem 1rem; border-radius: 100px;
+      font-size: 0.8rem; color: var(--gold); margin-bottom: 2rem;
+      animation: fadeUp 0.8s ease both;
+    }
+    .hero-badge::before { content: '◆'; font-size: 0.5rem; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 5.2rem);
+      font-weight: 900; line-height: 1.08;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s 0.15s ease both;
+    }
+    h1 em { color: var(--gold); font-style: normal; }
+    .hero-sub {
+      font-size: 1.15rem; color: rgba(255,255,255,0.65);
+      line-height: 1.7; max-width: 520px; margin-bottom: 3rem;
+      font-weight: 300;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.8s 0.45s ease both; }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: 0.9rem 2.2rem; border-radius: 5px;
+      font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; transition: all 0.25s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.3); }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      padding: 0.9rem 2.2rem; border-radius: 5px;
+      border: 1px solid rgba(255,255,255,0.2);
+      font-weight: 500; font-size: 0.95rem;
+      text-decoration: none; transition: all 0.25s;
+    }
+    .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-stats {
+      position: absolute; right: 6%; bottom: 10%;
+      display: flex; flex-direction: column; gap: 1.5rem;
+      animation: fadeLeft 0.8s 0.6s ease both;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      padding: 1.2rem 1.8rem; border-radius: 8px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--gold);
+      display: block;
+    }
+    .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 0.2rem; }
+
+    /* ── CLIENTES / CONFIANÇA ── */
+    .trust-bar {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 1.8rem 6%;
+      display: flex; align-items: center; gap: 3rem;
+      overflow: hidden;
+    }
+    .trust-bar span { font-size: 0.78rem; color: rgba(255,255,255,0.35); white-space: nowrap; letter-spacing: 1px; text-transform: uppercase; }
+    .trust-logos { display: flex; gap: 3rem; align-items: center; flex: 1; }
+    .trust-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; color: rgba(255,255,255,0.2);
+      font-weight: 600; white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .trust-logo:hover { color: rgba(201,168,76,0.6); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 7rem 6%; }
+    .section-tag {
+      font-size: 0.78rem; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1rem; display: block;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; line-height: 1.2;
+    }
+    .section-sub {
+      color: rgba(255,255,255,0.55);
+      font-size: 1.05rem; line-height: 1.7;
+      max-width: 500px; margin-top: 1rem; font-weight: 300;
+    }
+
+    /* ── SERVIÇOS ── */
+    #servicos { background: var(--navy-mid); }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 2rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5px; }
+    .service-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--gold);
+      transform: scaleX(0); transition: transform 0.3s;
+    }
+    .service-card:hover { background: rgba(201,168,76,0.05); transform: translateY(-3px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: grid; place-items: center;
+      font-size: 1.4rem; margin-bottom: 1.5rem;
+    }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; margin-bottom: 0.8rem;
+    }
+    .service-card p { color: rgba(255,255,255,0.55); font-size: 0.92rem; line-height: 1.7; font-weight: 300; }
+
+    /* ── SOBRE ── */
+    #sobre { background: var(--navy); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .about-visual {
+      position: relative; aspect-ratio: 4/5;
+      max-height: 560px;
+    }
+    .about-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(201,168,76,0.1), rgba(17,34,64,0.8));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+    }
+    .about-img-placeholder .big-icon { font-size: 5rem; opacity: 0.4; }
+    .about-float {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--gold); color: var(--navy);
+      padding: 1.5rem 2rem; border-radius: 10px;
+    }
+    .about-float strong { font-size: 2rem; display: block; font-family: 'Playfair Display', serif; }
+    .about-float span { font-size: 0.8rem; font-weight: 600; }
+    .about-text h2 { margin-bottom: 1.5rem; }
+    .about-features { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .about-feature { display: flex; gap: 1rem; align-items: flex-start; }
+    .check {
+      width: 24px; height: 24px; min-width: 24px;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid var(--border);
+      border-radius: 50%; display: grid; place-items: center;
+      font-size: 0.7rem; color: var(--gold); margin-top: 2px;
+    }
+    .about-feature p { font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+    /* ── DIFERENCIAIS ── */
+    #diferenciais { background: var(--cream); color: var(--navy); }
+    #diferenciais .section-title { color: var(--navy); }
+    #diferenciais .section-sub { color: rgba(10,22,40,0.6); }
+    .diff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .diff-card {
+      padding: 2.5rem 2rem; text-align: center;
+      border-radius: 12px; transition: all 0.3s;
+      background: white;
+      box-shadow: 0 2px 20px rgba(10,22,40,0.06);
+    }
+    .diff-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(10,22,40,0.12); }
+    .diff-icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+    .diff-card h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; margin-bottom: 0.8rem; color: var(--navy); }
+    .diff-card p { font-size: 0.9rem; color: rgba(10,22,40,0.6); line-height: 1.65; }
+
+    /* ── PROCESSO ── */
+    #processo { background: var(--navy-mid); }
+    .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; margin-top: 4rem; position: relative; }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 2rem; left: 0; right: 0;
+      height: 1px; background: var(--border);
+    }
+    .step { padding: 0 2rem 2rem; position: relative; }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 900;
+      color: var(--gold); opacity: 0.3;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .step-dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--gold);
+      position: absolute; top: 1.56rem; left: 2rem;
+    }
+    .step h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; margin-top: 1.5rem; }
+    .step p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.65; }
+
+    /* ── DEPOIMENTOS ── */
+    #depoimentos { background: var(--navy); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .testimonial {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      padding: 2.5rem; border-radius: 12px;
+      transition: all 0.3s;
+    }
+    .testimonial:hover { border-color: rgba(201,168,76,0.4); }
+    .stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 1.2rem; letter-spacing: 2px; }
+    .testimonial p { font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.75; font-style: italic; font-weight: 300; }
+    .testimonial-author { display: flex; align-items: center; gap: 1rem; margin-top: 1.8rem; }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--navy-mid));
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 1rem; color: var(--navy);
+    }
+    .author-info strong { display: block; font-size: 0.92rem; }
+    .author-info span { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+    /* ── FAQ ── */
+    #faq { background: var(--navy-mid); }
+    .faq-grid { max-width: 780px; margin: 4rem auto 0; display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; background: none; border: none;
+      color: var(--white); text-align: left;
+      padding: 1.5rem 0; font-size: 1rem;
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      cursor: pointer; display: flex; justify-content: space-between;
+      align-items: center; gap: 1rem;
+    }
+    .faq-q .arrow { color: var(--gold); font-size: 1.2rem; transition: transform 0.3s; }
+    .faq-item.open .arrow { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-item.open .faq-a { max-height: 300px; }
+    .faq-a p { padding-bottom: 1.5rem; color: rgba(255,255,255,0.55); font-size: 0.95rem; line-height: 1.75; font-weight: 300; }
+
+    /* ── CONTATO ── */
+    #contato { background: var(--navy); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .contact-icon {
+      width: 48px; height: 48px; min-width: 48px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--border); border-radius: 8px;
+      display: grid; place-items: center; font-size: 1.2rem;
+    }
+    .contact-item strong { display: block; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.3rem; letter-spacing: 1px; text-transform: uppercase; }
+    .contact-item p { font-size: 0.95rem; color: rgba(255,255,255,0.65); }
+    .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    label { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 0.5px; text-transform: uppercase; }
+    input, textarea, select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 0.85rem 1rem;
+      color: var(--white); font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; width: 100%;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+    textarea { resize: vertical; min-height: 140px; }
+    select option { background: var(--navy-mid); }
+    .submit-btn {
+      background: var(--gold); color: var(--navy);
+      border: none; padding: 1rem 2rem;
+      border-radius: 6px; font-weight: 700;
+      font-size: 0.95rem; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.25s; text-align: center;
+    }
+    .submit-btn:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .success-msg {
+      display: none; background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 1rem; border-radius: 6px;
+      color: var(--gold-light); font-size: 0.9rem; text-align: center;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: linear-gradient(135deg, var(--gold) 0%, #a87c2a 100%);
+      padding: 5rem 6%; text-align: center; color: var(--navy);
+    }
+    .cta-band h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900; margin-bottom: 1rem;
+    }
+    .cta-band p { font-size: 1.05rem; margin-bottom: 2.5rem; opacity: 0.8; }
+    .cta-band .btn-dark {
+      background: var(--navy); color: var(--white);
+      padding: 1rem 2.5rem; border-radius: 5px;
+      font-weight: 700; font-size: 1rem;
+      text-decoration: none; display: inline-block;
+      transition: all 0.25s;
+    }
+    .cta-band .btn-dark:hover { background: var(--navy-mid); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060e1a;
+      padding: 5rem 6% 2rem;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 4rem; margin-bottom: 4rem; }
+    .footer-brand p { color: rgba(255,255,255,0.45); font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; font-weight: 300; max-width: 280px; }
+    .footer-social { display: flex; gap: 0.8rem; margin-top: 1.5rem; }
+    .social-btn {
+      width: 38px; height: 38px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 6px; display: grid; place-items: center;
+      font-size: 0.9rem; text-decoration: none; color: rgba(255,255,255,0.5);
+      transition: all 0.2s;
+    }
+    .social-btn:hover { background: rgba(201,168,76,0.15); color: var(--gold); border-color: var(--border); }
+    .footer-col h4 { font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 1.5rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .footer-col a { text-decoration: none; color: rgba(255,255,255,0.55); font-size: 0.9rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: 0.82rem; color: rgba(255,255,255,0.25); }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    /* ── FLOATING WHATSAPP ── */
+    .float-wa {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      background: #25D366; color: white;
+      width: 58px; height: 58px; border-radius: 50%;
+      display: grid; place-items: center;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+      text-decoration: none; font-size: 1.6rem;
+      transition: all 0.25s;
+      animation: bounce 2s infinite;
+    }
+    .float-wa:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(37,211,102,0.5); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-stats { display: none; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-visual { max-height: 320px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+      .nav-links { display: none; }
+      .process-steps { grid-template-columns: 1fr; }
+      .process-steps::before { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 580px) {
+      section { padding: 5rem 5%; }
+      nav { padding: 1rem 5%; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">Paulo Carvalho <span>Contabilidade</span></div>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="#depoimentos">Clientes</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5583988236443" target="_blank" class="nav-cta">Consulta Gratuita →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Especialistas em Contabilidade Empresarial</div>
+    <h1>Precisão que <em>transforma</em><br>negócios reais</h1>
+    <p class="hero-sub">Da abertura de empresa ao planejamento tributário estratégico — cuidamos de cada número para você focar no que importa: crescer.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5583988236443" target="_blank" class="btn-primary">Solicitar Consulta Gratuita →</a>
+      <a href="#servicos" class="btn-secondary">Ver Serviços</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-card">
+      <span class="stat-num">+1.200</span>
+      <span class="stat-label">Clientes ativos</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">18 anos</span>
+      <span class="stat-label">de experiência</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">98%</span>
+      <span class="stat-label">índice de satisfação</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span>Empresas que confiam</span>
+  <div class="trust-logos">
+    <span class="trust-logo">TechBrasil</span>
+    <span class="trust-logo">Grupo Meridian</span>
+    <span class="trust-logo">Starta</span>
+    <span class="trust-logo">Vivanti</span>
+    <span class="trust-logo">Constructa</span>
+    <span class="trust-logo">NovaMed</span>
+  </div>
+</div>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="services-header">
+    <div>
+      <span class="section-tag">O que fazemos</span>
+      <h2 class="section-title">Soluções completas<br>para sua empresa</h2>
+    </div>
+    <p class="section-sub">Do simples ao complexo, temos a expertise e a tecnologia para entregar resultados consistentes.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🏢</div>
+      <h3>Abertura de Empresas</h3>
+      <p>Cuidamos de todo o processo: escolha do CNAE, regime tributário, registro na Junta Comercial e alvarás. Empresa aberta em até 5 dias úteis.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <h3>Contabilidade Gerencial</h3>
+      <p>Demonstrativos financeiros precisos, DRE, balanço patrimonial e fluxo de caixa. Informação confiável para tomada de decisão.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💼</div>
+      <h3>Planejamento Tributário</h3>
+      <p>Enquadramento no melhor regime (Simples, Lucro Presumido ou Real) com análise personalizada para reduzir legalmente sua carga tributária.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">👥</div>
+      <h3>Departamento Pessoal</h3>
+      <p>Admissão, demissão, folha de pagamento, eSocial, férias e 13º salário. Compliance trabalhista completo para sua empresa.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📋</div>
+      <h3>Obrigações Fiscais</h3>
+      <p>Entrega de SPED, EFD, DCTF, ECF e todas as obrigações acessórias nos prazos corretos, sem multas e sem preocupações.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔍</div>
+      <h3>Auditoria & Consultoria</h3>
+      <p>Análise profunda da saúde financeira do negócio, identificação de riscos e oportunidades, e consultoria estratégica para crescimento.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">💰</div>
+      <h3>Recuperação de Créditos</h3>
+      <p>Identificamos créditos tributários pagos a mais e gerenciamos o processo de recuperação junto à Receita Federal.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📱</div>
+      <h3>Contabilidade Digital</h3>
+      <p>Portal exclusivo do cliente, acesso 24/7 a documentos, dashboards financeiros em tempo real e comunicação direta com seu contador.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-img-placeholder">
+        <div class="big-icon">⚖️</div>
+        <p style="color:rgba(255,255,255,0.3); font-size:0.85rem;">Paulo Carvalho Contabilidade</p>
+      </div>
+      <div class="about-float">
+        <strong>2006</strong>
+        <span>Fundada em</span>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <span class="section-tag">Quem somos</span>
+      <h2 class="section-title">Mais de 18 anos cuidando do que mais importa</h2>
+      <p class="section-sub">A Nexus nasceu com a missão de oferecer contabilidade de alto nível para empresas de todos os portes — com transparência, tecnologia e atendimento humanizado.</p>
+      <div class="about-features">
+        <div class="about-feature">
+          <div class="check">✓</div>
+          <p><strong>Equipe especializada por segmento</strong> — contadores dedicados a comércio, serviços, indústria, e-commerce e healthtech.</p>
+        </div>
+        <div class="about-feature">
+          <div class="check">✓</div>
+          <p><strong>Tecnologia de ponta</strong> — integração com os principais ERPs do mercado, automação de obrigações e portal digital exclusivo.</p>
+        </div>
+        <div class="about-feature">
+          <div class="check">✓</div>
+          <p><strong>Atendimento proativo</strong> — você não precisa perguntar. Avisamos antes de cada vencimento e entregamos relatórios mensais sem que você precise solicitar.</p>
+        </div>
+        <div class="about-feature">
+          <div class="check">✓</div>
+          <p><strong>CRC ativo e certificações</strong> — toda a equipe é registrada no Conselho Regional de Contabilidade com especialização contínua.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="diferenciais">
+  <div style="text-align:center">
+    <span class="section-tag" style="color:#a87c2a">Por que nos escolher</span>
+    <h2 class="section-title">O que nos torna diferentes</h2>
+    <p class="section-sub" style="margin:1rem auto 0; color:rgba(10,22,40,0.6)">Não somos apenas um escritório de contabilidade. Somos parceiros estratégicos do seu negócio.</p>
+  </div>
+  <div class="diff-grid">
+    <div class="diff-card reveal">
+      <div class="diff-icon">⚡</div>
+      <h3>Resposta em 4 horas</h3>
+      <p>Garantimos retorno a qualquer solicitação em até 4 horas úteis. Sem fila, sem espera interminável.</p>
+    </div>
+    <div class="diff-card reveal">
+      <div class="diff-icon">🔒</div>
+      <h3>Conformidade Total</h3>
+      <p>Zero multas por atraso ou inconsistência. Monitoramos todos os prazos do calendário fiscal automaticamente.</p>
+    </div>
+    <div class="diff-card reveal">
+      <div class="diff-icon">📈</div>
+      <h3>Foco no Crescimento</h3>
+      <p>Analisamos indicadores e sugerimos melhorias para aumentar a rentabilidade e reduzir custos desnecessários.</p>
+    </div>
+    <div class="diff-card reveal">
+      <div class="diff-icon">🤝</div>
+      <h3>Contador Dedicado</h3>
+      <p>Você tem um profissional fixo que conhece sua empresa profundamente — não fala com um funcionário diferente toda vez.</p>
+    </div>
+    <div class="diff-card reveal">
+      <div class="diff-icon">☁️</div>
+      <h3>100% Digital</h3>
+      <p>Envie documentos pelo app, assine contratos digitalmente e acesse balancetes a qualquer hora, de qualquer lugar.</p>
+    </div>
+    <div class="diff-card reveal">
+      <div class="diff-icon">💡</div>
+      <h3>Preço Transparente</h3>
+      <p>Sem surpresas na fatura. Contrato claro, valor fixo mensal e escopo detalhado do que está incluído.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section id="processo">
+  <div style="text-align:center">
+    <span class="section-tag">Como funciona</span>
+    <h2 class="section-title">Do contato à parceria<br>em 4 passos</h2>
+  </div>
+  <div class="process-steps reveal">
+    <div class="step">
+      <div class="step-dot"></div>
+      <div class="step-num">01</div>
+      <h3>Consulta Gratuita</h3>
+      <p>Agendamos uma reunião (presencial ou online) para entender sua empresa, necessidades e objetivos.</p>
+    </div>
+    <div class="step">
+      <div class="step-dot"></div>
+      <div class="step-num">02</div>
+      <h3>Diagnóstico & Proposta</h3>
+      <p>Realizamos uma análise da situação atual e apresentamos uma proposta personalizada com escopo e valores.</p>
+    </div>
+    <div class="step">
+      <div class="step-dot"></div>
+      <div class="step-num">03</div>
+      <h3>Onboarding Ágil</h3>
+      <p>Recebemos toda a documentação, migramos dados do contador anterior (se houver) e ativamos seu acesso ao portal.</p>
+    </div>
+    <div class="step">
+      <div class="step-dot"></div>
+      <div class="step-num">04</div>
+      <h3>Parceria Contínua</h3>
+      <p>Acompanhamento mensal, relatórios, reuniões periódicas e suporte constante para o crescimento do seu negócio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div style="text-align:center; margin-bottom:0">
+    <span class="section-tag">Depoimentos</span>
+    <h2 class="section-title">O que nossos clientes dizem</h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Migrei para a Nexus depois de anos com um contador que nunca me dava retorno. A diferença é absurda — hoje tenho relatórios mensais, alertas de vencimento e meu contador me liga antes de eu perguntar."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">RC</div>
+        <div class="author-info">
+          <strong>Ricardo C.</strong>
+          <span>CEO — TechFlow Soluções</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <p>"O planejamento tributário que a Nexus fez para nossa empresa resultou em uma economia de mais de R$ 80 mil por ano. Profissionalismo e conhecimento fora do comum."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">AM</div>
+        <div class="author-info">
+          <strong>Ana M.</strong>
+          <span>Diretora Financeira — Meridian Group</span>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial reveal">
+      <div class="stars">★★★★★</div>
+      <p>"Abri minha segunda empresa com eles e foi tranquilíssimo. Em 4 dias estava tudo resolvido. O portal digital é incrível, tenho tudo na palma da mão."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">FS</div>
+        <div class="author-info">
+          <strong>Fernando S.</strong>
+          <span>Empresário — Rede Vivanti</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div style="text-align:center">
+    <span class="section-tag">Dúvidas frequentes</span>
+    <h2 class="section-title">Perguntas frequentes</h2>
+  </div>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Quanto custa a contabilidade para minha empresa?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><p>Os valores variam conforme o porte da empresa, regime tributário e serviços contratados. Oferecemos uma consulta gratuita e um diagnóstico completo antes de apresentar qualquer proposta. Para MEI e pequenas empresas, temos planos a partir de R$ 199/mês.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Posso trocar de contador sem perder histórico?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><p>Sim! Cuidamos de todo o processo de migração. Entramos em contato com o contador anterior, solicitamos a documentação necessária e garantimos a continuidade sem nenhum prejuízo para sua empresa. O processo é simples e gratuito.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Qual o melhor regime tributário para minha empresa?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><p>Depende do faturamento, atividade, margem de lucro e outros fatores. Na consulta gratuita, fazemos uma simulação completa entre Simples Nacional, Lucro Presumido e Lucro Real para identificar qual gera menor carga tributária para o seu caso específico.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Vocês atendem empresas de outros estados?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><p>Sim! Somos 100% digitais e atendemos clientes em todo o território nacional. Todo o processo funciona de forma remota, com reuniões por videoconferência e envio digital de documentos pelo nosso portal.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Como funciona o suporte e o atendimento?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><p>Cada cliente tem um contador dedicado com acesso direto por WhatsApp, e-mail e telefone. Também disponibilizamos um portal digital com chat de suporte, base de conhecimento e agendamento online. Garantimos resposta em até 4 horas úteis.</p></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Vocês ajudam na abertura de empresa?
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a"><p>Absolutamente! Cuidamos de todo o processo: definição do tipo societário, escolha do CNAE, elaboração do contrato social, registro na Junta Comercial, inscrição estadual e municipal, alvarás e licenças. Empresa aberta em até 5 dias úteis.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="contact-grid">
+    <div>
+      <span class="section-tag">Fale conosco</span>
+      <h2 class="section-title">Pronto para simplificar<br>sua contabilidade?</h2>
+      <p class="section-sub">Entre em contato e agende sua consulta gratuita. Sem compromisso.</p>
+      <div class="contact-info" style="margin-top:3rem">
+        <div class="contact-item reveal">
+          <div class="contact-icon">📍</div>
+          <div>
+            <strong>Endereço</strong>
+            <p>Av. Paulista, 1000 — 10º andar<br>Bela Vista, São Paulo — SP</p>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">📞</div>
+          <div>
+            <strong>Telefone</strong>
+            <p>(83) 98823-6443 (WhatsApp)</p>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <strong>E-mail</strong>
+            <p>contato@paulocarvalhocontabilidade.com.br</p>
+          </div>
+        </div>
+        <div class="contact-item reveal">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <strong>Horário de Atendimento</strong>
+            <p>Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 12h</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" placeholder="João Silva"/>
+          </div>
+          <div class="form-group">
+            <label for="empresa">Empresa</label>
+            <input type="text" id="empresa" placeholder="Minha Empresa Ltda"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="joao@empresa.com"/>
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone / WhatsApp</label>
+            <input type="tel" id="telefone" placeholder="(11) 99000-0000"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="servico">Serviço de interesse</label>
+          <select id="servico">
+            <option value="">Selecione um serviço...</option>
+            <option>Abertura de Empresa</option>
+            <option>Contabilidade Mensal</option>
+            <option>Planejamento Tributário</option>
+            <option>Departamento Pessoal</option>
+            <option>Auditoria & Consultoria</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="msg">Mensagem</label>
+          <textarea id="msg" placeholder="Conte um pouco sobre sua empresa e como podemos ajudar..."></textarea>
+        </div>
+        <button class="submit-btn" onclick="submitForm()">Enviar pelo WhatsApp →</button>
+        <div class="success-msg" id="successMsg">✅ Mensagem enviada com sucesso! Entraremos em contato em até 4 horas úteis.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Sua empresa merece contabilidade de excelência</h2>
+  <p>Junte-se a mais de 1.200 empresas que crescem com tranquilidade contábil.</p>
+  <a href="https://wa.me/5583988236443" target="_blank" class="btn-dark">Agendar Consulta Gratuita →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo">Paulo Carvalho <span>Contabilidade</span></div>
+      <p>Precisão, transparência e tecnologia a serviço do crescimento da sua empresa. CRC/SP 000000/O-0.</p>
+      <div class="footer-social">
+        <a class="social-btn" href="#" title="Instagram">📸</a>
+        <a class="social-btn" href="#" title="LinkedIn">💼</a>
+        <a class="social-btn" href="#" title="Facebook">📘</a>
+        <a class="social-btn" href="#" title="YouTube">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Serviços</h4>
+      <ul>
+        <li><a href="#servicos">Abertura de Empresa</a></li>
+        <li><a href="#servicos">Contabilidade Gerencial</a></li>
+        <li><a href="#servicos">Planejamento Tributário</a></li>
+        <li><a href="#servicos">Departamento Pessoal</a></li>
+        <li><a href="#servicos">Auditoria</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="#sobre">Sobre nós</a></li>
+        <li><a href="#diferenciais">Diferenciais</a></li>
+        <li><a href="#depoimentos">Clientes</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Trabalhe Conosco</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="#">Política de Privacidade</a></li>
+        <li><a href="#">Termos de Uso</a></li>
+        <li><a href="#">LGPD</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Paulo Carvalho Contabilidade. Todos os direitos reservados.</p>
+    <p>Desenvolvido com ♥ | <a href="#">Política de Privacidade</a></p>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5583988236443" class="float-wa" target="_blank" title="Fale pelo WhatsApp">💬</a>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Form submit — abre WhatsApp com mensagem
+  function submitForm() {
+    const nome = document.getElementById('nome').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const empresa = document.getElementById('empresa').value.trim();
+    const telefone = document.getElementById('telefone').value.trim();
+    const servico = document.getElementById('servico').value;
+    const msg = document.getElementById('msg').value.trim();
+    if (!nome || !email) { alert('Por favor, preencha pelo menos nome e e-mail.'); return; }
+    const texto = `Olá, Paulo Carvalho Contabilidade! 👋\n\n*Nome:* ${nome}\n*Empresa:* ${empresa || 'Não informado'}\n*E-mail:* ${email}\n*Telefone:* ${telefone || 'Não informado'}\n*Serviço de interesse:* ${servico || 'Não informado'}\n*Mensagem:* ${msg || 'Gostaria de mais informações.'}`;
+    window.open('https://wa.me/5583988236443?text=' + encodeURIComponent(texto), '_blank');
+  }
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.padding = window.scrollY > 60 ? '0.8rem 6%' : '1.2rem 6%';
+  });
+</script>
+</body>
+</html>
